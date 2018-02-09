@@ -45,7 +45,9 @@ function verChicaOcupada(pId){
 }
 
 
+
 verChicaOcupada(10496856);//Allis
+verChicaOcupada(10472652);//Arieanna **
 verChicaOcupada(10638928);//AnnabellKitty
 verChicaOcupada(10472588);//dayana
 verChicaOcupada(10636969);//galinka *
