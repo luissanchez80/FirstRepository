@@ -45,13 +45,21 @@ function verChicaOcupada(pId){
 }
 
 
-verChicaOcupada(10547950); //Joei
-verChicaOcupada(10472547);//sophy
-verChicaOcupada(10507158);//merida
+verChicaOcupada(10496856);//Allis
+verChicaOcupada(10638928);//AnnabellKitty
 verChicaOcupada(10472588);//dayana
-verChicaOcupada(10472547);//sophy
+verChicaOcupada(10636969);//galinka *
 verChicaOcupada(10638925);//honneyCaramel
-verChicaOcupada(10472669);//naomia
-verChicaOcupada(10628055);//yoko
+verChicaOcupada(10547950);//Joei
 verChicaOcupada(10616691);//katie
+verChicaOcupada(10277348);//Maiza *
+verChicaOcupada(10572589);//Miklaus *
+verChicaOcupada(10507158);//merida
+verChicaOcupada(10642276);//MickyBristol
+verChicaOcupada(10472669);//naomia *
+verChicaOcupada(10472547);//sophy
+verChicaOcupada(10500884);//Suszie*
+verChicaOcupada(10620885);//TiffanyBella
+verChicaOcupada(10565571);//ToryHump *
+verChicaOcupada(10628055);//yoko
 $('#foo').trigger('mouseover');
