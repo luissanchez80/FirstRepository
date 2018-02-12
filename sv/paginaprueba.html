@@ -19,7 +19,7 @@
 	<label>ID: </label>
 	<div class="form-group">
 		<div class="col-sm-2">
-			<input id="txtId" type="text" class="form-control" value="10547950" />
+			<input id="txtId" type="text" class="form-control" value="10496856" />
 		</div>
 		<button id="btnVer" class="btn col-sm-2">Ver</button><i class="fa fa-square"></i>
 		<i class="fa fa-square"></i>
@@ -219,6 +219,7 @@
 					{
 						case 'model-online': //verde
 							estatus = 1
+							color = 'iconoVerde';							
 							break;
 						case 'model-private': //rojo
 							estatus = 2
@@ -226,6 +227,7 @@
 							break;
 						case 'model-vip': //morado
 							estatus = 3
+							color = 'iconoMorado';	
 							break;
 						case 'model-premium': //amarillo
 							estatus = 4
@@ -242,7 +244,7 @@
 						str += '			<div class="model-details">';
 						str += '				<p style="float: inherit;">';
 						str += '					<span class="status-marker"><i class="' + icono + ' '+ color +'"></i></span> ';
-						str += '					<span class="name-marker"><button class="btn-link badge" data-id="' + id +  '" onclick="verChicaButton(' + id +  ')">' + nombre + '</button></span>';
+						str += '					<span class="name-marker"><button class="btn-link badge" data-id="' + id +  '" onclick="verChicaButton(' + id +  ')">' + nombre + ' - '+estatus+'</button></span>';
 						str += '					<span class="hidden-xs model-price pull-right">&nbsp; </span>';
 						str += '				</p> ';
 						str += '			</div>';

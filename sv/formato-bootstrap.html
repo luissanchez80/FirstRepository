@@ -1,0 +1,361 @@
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="es">
+<head>
+	<title>SeventeenVideo Hack!</title>
+</head>
+	<link href="css/estilos.css" rel="stylesheet" type="text/css" />
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>	
+	<script src="js/html2canvas.js" type="text/javascript"></script>	
+
+<body class="conyainer">
+
+	
+<div class="row busqueda ">
+	<div class="col-md-4" style="background-color:lavender;">
+		<div class="form-group">
+			<label for="txtId" class="col-md-2">ID:</label>
+			<div class="col-md-7">
+				<input type="text" class="form-control" id="txtId" value="10472547">
+			</div>
+			<button id="btnVer" class="btn col-md-3">Ver</button>
+		</div>		
+	</div>
+	<div class="col-md-2" style="background-color:lavenderblush;">
+		<div class="form-group divSonido">
+			<label for="txtId">Sonido:</label>
+		    <label class="radio-inline">
+		      <input type="radio" name="son" value="1">SI
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" name="son" value="0" checked>NO
+		    </label>	
+	    </div>
+	</div>	
+	<div class="col-md-3" style="background-color:lavenderblush;">
+		<div class="form-group">
+			<label for="txtId">Tamaño:</label>
+		    <label class="radio-inline">
+		      <input type="radio" name="tam" value="oculto">Oculto
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" name="tam" value="chico" checked>CH
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" name="tam" value="mediano">MD
+		    </label>	
+		    <label class="radio-inline">
+		      <input type="radio" name="tam" value="grande">GD
+		    </label>	
+	    </div>
+	</div>
+	<div class="col-md-3 divUrlOrigen" style="background-color:lavender;">
+		<div class="form-group">
+			<label for="txtId">Origen:</label>
+		    <label class="radio-inline">
+		      <input type="radio" name="optradio" valido="1" checked>SF
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" name="optradio" valido="2">17V
+		    </label>	
+	    </div>
+	</div>
+</div>
+
+<div class="row col-md-12 camsOptions">
+	<div class="cam col-md-4" style="background-color:lavenderblush;">	
+		<button id="btnOcultar" class='btn btn-default col-sm-4'>Ocultar</button>
+		<button id="btnCaptura" class='btn btn-default col-sm-4'>Captura</button>
+		<div class="col-sm-4">
+			<a href="https://screencast-o-matic.com/screen_recorder" target="_blank">screencast</a>
+		</div>	
+	</div>
+	<div class="catalogoCam col-md-8" style="background-color:lavender;">
+		&nbsp;
+	</div>	
+</div>
+
+<!-- PANTALLA Y CATÁLOGO -->
+<div class="row col-md-12 cams">
+	<div class="cam col-md-4" style="background-color:lavender;">
+		<div><strong id="divNombre">--nombre--</strong></div>
+		<div id="pantalla" class="pantalla text-center" style="border:solid 1px #000000; padding:10px;"></div>
+		<div class="url">--url--</div>
+		<div class="log small" style="width:100%; height:150px; max-height:150px; border:solid 1px #000000; overflow:auto;"></div>
+		<div><a id="limpiaLog" href="#">Limpiar</a></div>
+	</div>
+	<div class="catalogoChicas col-md-8" style="background-color:lavenderblush;">
+		<div>&nbsp;</div>
+		<div style="border:solid 1px #000000; overflow:auto; height: 500px;" class="linksChicas">catálogo</div>
+		<div><a id="link" href="#">Carga manual</a></div>
+	</div>	
+</div>
+
+<div id="response" style="width:100%; height:300px; border: solid 1px #000000; overflow:auto; max-height:300px; visibility:hidden;">-</div>
+<br /><br />	
+<canvas width="500" height="200"></canvas>
+
+<script>
+	var estiloPantalla = 'pantallaChica';
+	var estiloPadrePantalla = 'padrePantallaOculta';
+	var sonido = 0;
+	var urlGral = 'https://www.secretfriends.com/';
+	var log = $('.log');
+
+	$(document).ready(function()
+	{		
+		//ver en pantalla
+		$('#btnVer').click(function(){
+			var id = $('#txtId').val();				
+			verChica(id);
+		});
+		//tamaño pantalla		
+		$('input[type="radio"][name="tam"]').change(function(){
+			var valor = $(this).val();
+	
+			switch(valor)
+			{
+				case 'oculto':
+					estiloPantalla = 'pantallaOculta';
+					estiloPadrePantalla = 2;
+					break;
+				case 'chico':
+					estiloPantalla = 'pantallaChica';
+					estiloPadrePantalla = 4;
+					break;						
+				case 'mediano':
+					estiloPantalla = 'pantallaMediana';
+					estiloPadrePantalla = 8; 
+					break;
+				case 'grande':
+					estiloPantalla = 'pantallaGrande';	
+					estiloPadrePantalla = 12;				
+				break;
+			}
+
+			var pantalla = $('.pantalla');
+			var catChicas = $('.catalogoChicas');
+			var padre = pantalla.closest('.cam');
+			var colCat = (estiloPadrePantalla == 12 ? 0 : estiloPadrePantalla);
+			padre.removeClass('col-md-2 col-md-4 col-md-8 col-md-12');
+			catChicas.removeClass('col-md-10 col-md-8 col-md-4 col-md-0 col-md-12');
+			padre.addClass('col-md-' + estiloPadrePantalla);
+			catChicas.addClass('col-md-' + (12 - colCat));
+			$('#btnVer').click();
+		});	
+		//sonido
+		$('input[type="radio"][name="son"]').change(function(){
+			var valor = $(this).val();
+			sonido = valor;
+			$('#btnVer').click();
+		});		
+		//
+		$('input[type="radio"][name="url"]').change(function(){
+			urlGral = ObtenerValorUrl($(this));	
+			$('#btnVer').click();				
+		});	
+		//ocultar contenidos	
+		$('#btnOcultar').click(function(){
+			VerEnIframe('.pantalla', 'http://google.com');
+			$('.linksChicas').empty();
+		});	
+		//
+		$('#limpiaLog').click(function()
+		{
+			$('.log').empty();
+		});
+
+		$('#txtId').click(function()
+		{
+			$(this).select();
+		});
+		
+		//botones dentro del catálogo
+		$('.linksChicas button').click(function(){				 
+			var id = $(this).data('id'); 
+
+			$('#txtId').val(id); 
+			$('#btnVer').click();  
+
+			var nombre = TraeNombreChica(id);  
+			$('#divNombre').html(nombre);  
+		}); 	
+
+		$("#link").click(function(){
+			TraerHtmlExterno();
+		});
+
+		 
+	    $("#btnCaptura").click(function() { 
+
+			var c = document.getElementById('#pantalla');
+			var t = c.getContext('2d');
+		     	window.open('', document.getElementById('#canvas').toDataURL());
+	    });		   
+
+
+
+		ObtenerChicas();
+		setInterval(function(){ ObtenerInofChicas(); }, 5000);
+		setInterval(function(){ TraerHtmlExterno(); }, 5000);
+	});	
+
+	//Ver
+	function verChica(id)
+	{		
+		var url = urlGral + '/share/friend?audio=' + sonido + '&controls=1&id=' + id;		 
+		VerEnIframe('.pantalla', url);
+		//VerEnIframe('.chicas', urlGral, undefined, 500);		
+		VerEnIframe('#response', 'http://phptesting.gearhostpreview.com/grabber.php?url='+ urlGral, undefined, 500);	
+	}	
+	//ver una url en iframe, el cuál va colocado en un div
+	function VerEnIframe(url, divId, pwidth, pheight)
+	{	
+		var pantalla = $(url);
+		pantalla.empty();
+		var content = '<iframe src=\"' + divId + '" scrolling=\"no\" id=\"preview-iframe\" name=\"Live Cam Preview\" style=\"top:0px; left: 0px; pointer-events: none; border: 0px; \" class="'+estiloPantalla+'"></iframe>';     
+		
+		pantalla.append(content);
+		log.append(divId + ' <br />');			
+	}
+	//	
+	function ObtenerValorUrl(objRadioButton)
+	{
+		var valor = $(objRadioButton).val();				
+		var valorUrl;
+		switch(valor)
+		{
+			case '1':
+				valorUrl = 'https://www.secretfriends.com/';
+				break;
+			case '2':
+				valorUrl = 'https://seventeenlive.com/';
+				break;						
+		}					
+		return valorUrl;
+	}
+
+	function TraerHtmlExterno()
+	{						
+		var contentURI= 'https://seventeenlive.com #home-widget';    // URL TO GRAB + # of any desired element // if needed :)
+		$('#response').load('http://phptesting.gearhostpreview.com/grabber.php?url='+ contentURI);				
+	}
+	
+	function ObtenerChicas()
+	{
+		var divChicas = $('.chicas');
+		$('#btnVer').click();
+	}	
+
+	function ObtenerInofChicas()
+	{
+		$('.catalogoChicas .linksChicas').empty();
+
+		$('#home-widget .col-xs-6.col-sm-4.col-md-3').each(function()
+		{
+			//id
+			var id = $(this).find('.absolute').data('id');
+			//nombre
+			var nombre = $(this).find('.name-marker').html();								
+			//foto
+			var fotoDiv = $(this).find('.placeholder-wrapper').html();								
+			var foto = $(this).find('.placeholder-wrapper').first().css('background-image');
+			foto = foto.replace('url(','').replace(')','').replace(/\"/gi, "");				
+			var estatusDesc = $(this).find('.model-tag').attr('class').split(' ')[1];						
+			//icono
+			var icono = $(this).find('.status-marker i').attr('class');			
+			var estatus = 0;
+			var color = '';
+			var colsPadre = $('.catalogoCam').attr('class').split(' ')[1].split('-')[2];
+			var colsHijo = 3; ///10=2, 8=3, 4=6, 12=1
+			switch(estatusDesc)
+			{
+				case 'model-online': //verde
+					estatus = 1
+					color = 'iconoVerde';		
+					break;
+				case 'model-private': //rojo
+					estatus = 2
+					color = 'iconoRojo';
+					break;
+				case 'model-vip': //morado
+					estatus = 3
+					color = 'iconoMorado';					
+					break;
+				case 'model-premium': //amarillo
+					estatus = 4
+					break;			
+			}	
+
+			switch(colsPadre)
+			{
+				case 10:
+					colsHijo = 2;				
+					break;
+				case 8:
+					colsHijo = 3;			
+					break;
+				case 6:
+					colsHijo = 6;					
+					break;
+				case 12:
+					colsHijo = 1;
+					break;			
+			}				
+			
+			if(estatus != 4 && nombre != undefined)
+			{			
+				var str = "";
+				str += '<div class="col-md-' + colsHijo + '"> ';
+				str += '	<div class="overlay-wrapper model-wrapper">    ';            
+				str += '		</div>     ';                   	
+				str += '		<div class="hovereffect">      ';                                               
+				str += '			<img src =\''+foto+'\' style="width:100px;" />';
+				str += '		<div class="model-tag '+estatusDesc+'">';
+				str += '			<div class="model-details">';
+				str += '				<p style="float: inherit;">';
+				str += '					<span class="status-marker"><i class="' + icono + ' '+ color +'"></i></span> ';
+				str += '					<span class="name-marker"><button class="btn-link badge" data-id="' + id +  '" onclick="verChicaButton(' + id +  ')">' + nombre + '</button></span>';
+				str += '					<span class="hidden-xs model-price pull-right">&nbsp; </span>';
+				str += '				</p> ';
+				str += '			</div>';				
+				str += '		</div>';
+				str += '	</div>  ';              
+				str += '</div>		';	
+
+				$('.catalogoChicas .linksChicas').append(str);				
+			}
+		});
+	}
+
+	function verChicaButton(id)
+	{									
+			<!-- var id = $(obj).data('id');  -->
+		<!-- alert(id); -->
+			$('#txtId').val(id); 
+			$('#btnVer').click();  
+
+			var nombre = TraeNombreChica(id);  
+			$('#divNombre').html(nombre);  		
+	}	
+
+	function TraeNombreChica(id)
+	{		
+		var resultado = '-no se pudo obtener nombre-';
+		var linksChicas = $('.linksChicas button');
+		$('.linksChicas button').each(function()
+		{			
+			var idLoop = $(this).data('id');;
+			if(idLoop == id)
+				resultado = $(this).text();
+		});
+		
+		return resultado;
+	}
+	
+</script>	
+
+</body>
+</html>
