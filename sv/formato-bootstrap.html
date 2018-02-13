@@ -3,6 +3,11 @@
 <html lang="es">
 <head>
 	<title>SeventeenVideo Hack!</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />	
 </head>
 	<link href="css/estilos.css" rel="stylesheet" type="text/css" />
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -18,14 +23,14 @@
 		<div class="form-group">
 			<label for="txtId" class="col-md-2">ID:</label>
 			<div class="col-md-7">
-				<input type="text" class="form-control" id="txtId" value="10472547">
+				<input type="text" class="form-control" id="txtId" value="">
 			</div>
 			<button id="btnVer" class="btn col-md-3">Ver</button>
 		</div>		
 	</div>
 	<div class="col-md-2" style="background-color:lavenderblush;">
 		<div class="form-group divSonido">
-			<label for="txtId">Sonido:</label>
+			<label>Sonido:</label>
 		    <label class="radio-inline">
 		      <input type="radio" name="son" value="1">SI
 		    </label>
@@ -36,7 +41,7 @@
 	</div>	
 	<div class="col-md-3" style="background-color:lavenderblush;">
 		<div class="form-group">
-			<label for="txtId">Tamaño:</label>
+			<label Tamaño:</label>
 		    <label class="radio-inline">
 		      <input type="radio" name="tam" value="oculto">Oculto
 		    </label>
@@ -53,7 +58,7 @@
 	</div>
 	<div class="col-md-3 divUrlOrigen" style="background-color:lavender;">
 		<div class="form-group">
-			<label for="txtId">Origen:</label>
+			<label>Origen:</label>
 		    <label class="radio-inline">
 		      <input type="radio" name="optradio" valido="1" checked>SF
 		    </label>
@@ -73,7 +78,15 @@
 		</div>	
 	</div>
 	<div class="catalogoCam col-md-8" style="background-color:lavender;">
-		&nbsp;
+		<div class="form-group">
+			<label>Solo Rojos:</label>
+		    <label class="radio-inline">
+		      <input type="radio" name="solorojo" valido="1" checked>Si
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" name="solorojo" valido="0">No
+		    </label>	
+	    </div>
 	</div>	
 </div>
 
@@ -103,6 +116,7 @@
 	var sonido = 0;
 	var urlGral = 'https://www.secretfriends.com/';
 	var log = $('.log');
+	var solorojo = false;
 
 	$(document).ready(function()
 	{		
@@ -156,6 +170,13 @@
 			urlGral = ObtenerValorUrl($(this));	
 			$('#btnVer').click();				
 		});	
+
+		//
+		$('input[type="radio"][name="solorojo"]').change(function(){
+			solorojo = $(this) == 1;	
+			$('#btnVer').click();				
+		});	
+			
 		//ocultar contenidos	
 		$('#btnOcultar').click(function(){
 			VerEnIframe('.pantalla', 'http://google.com');
@@ -307,6 +328,9 @@
 			
 			if(estatus != 4 && nombre != undefined)
 			{			
+				if(solorojo && estatus != 2)
+					continue;
+
 				var str = "";
 				str += '<div class="col-md-' + colsHijo + '"> ';
 				str += '	<div class="overlay-wrapper model-wrapper">    ';            
