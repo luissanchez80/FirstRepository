@@ -217,8 +217,8 @@
 		     	window.open('', document.getElementById('#canvas').toDataURL());
 	    });		   
 
-		ObtenerChicas();
-		setInterval(function(){ ObtenerInofChicas(); }, 15000);
+		TraerHtmlExterno();
+		setInterval(function(){ ObtenerInofChicas(); }, 5000);
 		setInterval(function(){ TraerHtmlExterno(); }, 15000);
 	});	
 
@@ -272,8 +272,6 @@
 	function ObtenerInofChicas()
 	{
 		var catalogoChicas = [];
-
-		$('.catalogoChicas .linksChicas').empty();
 
 		$('#home-widget .col-xs-6.col-sm-4.col-md-3').each(function()
 		{		
@@ -350,7 +348,9 @@
 			case 12:
 				colsHijo = 1;
 				break;			
-		}				
+		}
+
+		$('.catalogoChicas .linksChicas').empty();			
 
         for (var i = 0; i < jsonCatChicas.length; i++) {
             var id = jsonCatChicas[i].id;
